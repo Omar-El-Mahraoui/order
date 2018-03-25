@@ -2,7 +2,7 @@
 
 Issues :
 
-* OrderDto cannot be condtructed
+* OrderDto cannot be constructed
 
 
 
