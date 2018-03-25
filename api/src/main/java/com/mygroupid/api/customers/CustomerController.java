@@ -34,7 +34,7 @@ public class CustomerController {
         return customerService.getCustomer(customerId);
     }
 
-    @PostMapping(path = "/{customerId}")
+    @PostMapping(path = "/{customerId}/order")
     public Order createOrder(@PathVariable String customerId
                             , @RequestBody ItemGroup itemGroup) {
         return orderService.createOrder(customerId, itemGroup);
@@ -43,6 +43,12 @@ public class CustomerController {
     @GetMapping(path = "/{customerId}/orders")
     public List<Order> getReportOfOrders(@PathVariable String customerId) {
         return orderService.getReportOfOrders(customerId);
+    }
+
+    @PostMapping(path = "/{customerId}/re-order")
+    public Order createReOrder(@PathVariable String customerId
+            , @RequestParam String orderId) {
+        return orderService.createReOrder(customerId, orderId);
     }
 
 }

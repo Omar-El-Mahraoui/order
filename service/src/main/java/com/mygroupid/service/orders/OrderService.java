@@ -37,4 +37,13 @@ public class OrderService {
                 .filter(order->order.getCustomer().equals(customer))
                 .collect(toList());
     }
+
+    public Order createReOrder(String customerId, String orderId) {
+        Order orderToReOrder = orderDatabase.getOrders().stream()
+                .filter(order->order.getCustomer().getId().equals(customerId) && order.getId().equals(orderId))
+                .findFirst()
+                .get();
+        createOrder(customerId, orderToReOrder.getItemGroup());
+        return orderToReOrder;
+    }
 }
