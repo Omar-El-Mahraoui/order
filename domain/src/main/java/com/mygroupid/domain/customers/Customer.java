@@ -17,11 +17,15 @@ public class Customer {
         this.id = UUID.randomUUID();
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    private void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
@@ -29,7 +33,7 @@ public class Customer {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    private void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
@@ -37,7 +41,7 @@ public class Customer {
         return emailAddress;
     }
 
-    public void setEmailAddress(String emailAddress) {
+    private void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
 
@@ -45,7 +49,7 @@ public class Customer {
         return address;
     }
 
-    public void setAddress(String address) {
+    private void setAddress(String address) {
         this.address = address;
     }
 
@@ -53,7 +57,7 @@ public class Customer {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    private void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

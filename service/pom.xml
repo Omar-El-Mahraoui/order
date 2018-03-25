@@ -12,4 +12,11 @@
 
     <artifactId>service</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.mygroupid</groupId>
+            <artifactId>domain</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

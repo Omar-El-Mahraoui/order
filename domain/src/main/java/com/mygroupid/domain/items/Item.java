@@ -48,6 +48,8 @@ public class Item {
         this.amountInStock = amountInStock;
     }
 
+    public boolean isInStock() { return amountInStock>0; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

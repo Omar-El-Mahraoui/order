@@ -12,4 +12,11 @@
 
     <artifactId>jar</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.mygroupid</groupId>
+            <artifactId>api</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
