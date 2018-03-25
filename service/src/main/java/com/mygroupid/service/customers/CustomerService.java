@@ -1,7 +1,7 @@
 package com.mygroupid.service.customers;
 
 import com.mygroupid.domain.customers.Customer;
-import com.mygroupid.domain.customers.CustomerRepository;
+import com.mygroupid.domain.customers.CustomerDatabase;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,17 +11,17 @@ import java.util.List;
 public class CustomerService {
 
     @Inject
-    private CustomerRepository customerRepository;
+    private CustomerDatabase customerDatabase;
 
     public Customer createCustomer(Customer customer) {
-        return customerRepository.createCustomer(customer);
+        return customerDatabase.createCustomer(customer);
     }
 
     public List<Customer> getCustomers() {
-        return customerRepository.getCustomers();
+        return customerDatabase.getCustomers();
     }
 
     public Customer getCustomer(String id) {
-        return customerRepository.getCustomer(id);
+        return customerDatabase.getCustomer(id);
     }
 }
