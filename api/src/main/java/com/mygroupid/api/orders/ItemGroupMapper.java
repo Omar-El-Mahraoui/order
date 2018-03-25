@@ -17,28 +17,17 @@ public class ItemGroupMapper {
     @Inject
     private ItemMapper itemMapper;
 
-    public List<ItemGroupDto> toDto(List<ItemGroup> itemGroups) {
-        List<ItemGroupDto> itemGroupDtoList = new ArrayList<>();
-        for(int index=0; index<itemGroups.size(); index++) {
-            itemGroupDtoList.add(new ItemGroupDto(
-                    itemMapper.toDto(itemGroups.get(index).getItem()),
-                    valueOf(itemGroups.get(index).getAmountOfItems()))
-            );
-        }
-        return itemGroupDtoList;
+    public ItemGroupDto toDto(ItemGroup itemGroup) {
+        return new ItemGroupDto(
+                itemMapper.toDto(itemGroup.getItem()),
+                valueOf(itemGroup.getAmountOfItems()));
     }
 
-    public List<ItemGroup> toDomain(List<ItemGroupDto> itemGroupDtos) {
-        List<ItemGroup> itemGroupList = new ArrayList<>();
-        for(int index=0; index<itemGroupDtos.size(); index++) {
-            itemGroupList.add(
-                    itemGroup()
-                    .withItem(itemMapper.toDomain(itemGroupDtos.get(index).getItem()))
-                    .withAmountOfItems(Integer.parseInt(itemGroupDtos.get(index).getAmountOfItems()))
-                    .build()
-            );
-        }
-        return itemGroupList;
+    public ItemGroup toDomain(ItemGroupDto itemGroupDto) {
+        return ItemGroup.ItemGroupBuilder.itemGroup()
+                .withItem(itemMapper.toDomain(itemGroupDto.getItem()))
+                .withAmountOfItems(Integer.parseInt(itemGroupDto.getAmountOfItems()))
+                .build();
     }
 
 }

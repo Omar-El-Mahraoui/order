@@ -1,7 +1,10 @@
 package com.mygroupid.api.customers;
 
+import com.mygroupid.api.orders.OrderDto;
+import com.mygroupid.api.orders.OrderMapper;
 import com.mygroupid.domain.orders.Order;
 import com.mygroupid.service.customers.CustomerService;
+import com.mygroupid.service.orders.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +23,10 @@ public class CustomerController {
     private CustomerService customerService;
     @Inject
     private CustomerMapper customerMapper;
+    @Inject
+    private OrderMapper orderMapper;
+    @Inject
+    private OrderService orderService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -35,13 +42,20 @@ public class CustomerController {
                 .collect(toList());
     }
 
-    @PostMapping(path = "/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PostMapping(path = "/orders", produces = MediaType.TEXT_PLAIN_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public String placeOrder(@RequestBody Order order) {
+    public String placeOrder(@RequestBody OrderDto orderDto) {
         return customerService
-                .order(order)
+                .order(orderMapper.toDomain(orderDto))
                 .getPrice()
                 .toString();
+    }
+
+    @GetMapping
+    public List<OrderDto> getOrders() {
+        return orderService.getOrders().stream()
+                .map(orderMapper::toDto)
+                .collect(toList());
     }
 
 }

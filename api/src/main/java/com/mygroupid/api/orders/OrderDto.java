@@ -7,19 +7,19 @@ import java.util.List;
 public class OrderDto {
 
     private CustomerDto customer;
-    private List<ItemGroupDto> itemGroups;
+    private ItemGroupDto itemGroup;
 
 
-    public OrderDto(CustomerDto customer, List<ItemGroupDto> itemGroups) {
+    public OrderDto(CustomerDto customer, ItemGroupDto itemGroup) {
         this.customer = customer;
-        this.itemGroups = itemGroups;
+        this.itemGroup = itemGroup;
     }
 
     public CustomerDto getCustomer() {
         return customer;
     }
 
-    public List<ItemGroupDto> getItemGroups() {
-        return itemGroups;
+    public ItemGroupDto getItemGroups() {
+        return itemGroup;
     }
 }
