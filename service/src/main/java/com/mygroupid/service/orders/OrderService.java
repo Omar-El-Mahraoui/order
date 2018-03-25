@@ -1,5 +1,6 @@
 package com.mygroupid.service.orders;
 
+import com.mygroupid.domain.customers.Customer;
 import com.mygroupid.domain.orders.ItemGroup;
 import com.mygroupid.domain.orders.Order;
 import com.mygroupid.domain.orders.OrderDatabase;
@@ -7,6 +8,9 @@ import com.mygroupid.service.customers.CustomerService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Named
 public class OrderService {
@@ -27,4 +31,10 @@ public class OrderService {
         return order;
     }
 
+    public List<Order> getReportOfOrders(String customerId) {
+        Customer customer = customerService.getCustomer(customerId);
+        return orderDatabase.getOrders().stream()
+                .filter(order->order.getCustomer().equals(customer))
+                .collect(toList());
+    }
 }

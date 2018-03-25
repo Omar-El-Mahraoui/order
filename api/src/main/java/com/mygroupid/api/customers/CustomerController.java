@@ -29,15 +29,20 @@ public class CustomerController {
         return customerService.getCustomers();
     }
 
-    @GetMapping(path = "/{id}")
-    public Customer getCustomer(@PathVariable String id) {
-        return customerService.getCustomer(id);
+    @GetMapping(path = "/{customerId}")
+    public Customer getCustomer(@PathVariable String customerId) {
+        return customerService.getCustomer(customerId);
     }
 
     @PostMapping(path = "/{customerId}")
     public Order createOrder(@PathVariable String customerId
                             , @RequestBody ItemGroup itemGroup) {
         return orderService.createOrder(customerId, itemGroup);
+    }
+
+    @GetMapping(path = "/{customerId}/orders")
+    public List<Order> getReportOfOrders(@PathVariable String customerId) {
+        return orderService.getReportOfOrders(customerId);
     }
 
 }
