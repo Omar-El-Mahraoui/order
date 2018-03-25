@@ -9,13 +9,21 @@ public class Order {
     private String id;
     private Customer customer;
     private ItemGroup itemGroup;
+    private String price;
 
-    public Order() {
-        this.id = UUID.randomUUID().toString();
+    public Order() {}
+
+    private String calculatePrice() {
+        return String.valueOf(Double.parseDouble(itemGroup.getItem().getPrice())
+                                * Integer.parseInt(itemGroup.getAmount()));
     }
 
     public String getId() {
         return id;
+    }
+
+    public void setId() {
+        this.id = UUID.randomUUID().toString();
     }
 
     public Customer getCustomer() {
@@ -32,5 +40,13 @@ public class Order {
 
     public void setItemGroup(ItemGroup itemGroup) {
         this.itemGroup = itemGroup;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice() {
+        this.price = calculatePrice();
     }
 }
