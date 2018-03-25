@@ -1,4 +1,4 @@
-# Örder exercise
+# Örder exercise (from switchfully exercises)
 
 Issues :
 
