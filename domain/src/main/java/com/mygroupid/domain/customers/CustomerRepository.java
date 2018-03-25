@@ -18,8 +18,7 @@ public class CustomerRepository {
         return customerDatabase.getCustomers();
     }
 
-    public void clearDatabase() {
-        customerDatabase.clearDatabase();
+    public Customer getCustomer(String id) {
+        return customerDatabase.getCustomer(id);
     }
-
 }

@@ -26,7 +26,10 @@ public class CustomerDatabase {
         return unmodifiableList(customers);
     }
 
-    public void clearDatabase() {
-        customers.clear();
+    public Customer getCustomer(String id) {
+        return customers.stream()
+                .filter(c->c.getId().equals(id))
+                .findFirst()
+                .get();
     }
 }

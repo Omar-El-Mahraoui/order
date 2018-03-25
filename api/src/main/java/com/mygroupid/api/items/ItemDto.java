@@ -1,3 +1,4 @@
+/*
 package com.mygroupid.api.items;
 
 public class ItemDto {
@@ -30,3 +31,4 @@ public class ItemDto {
         return amountInStock;
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.mygroupid.service.orders;
 
 import com.mygroupid.domain.orders.Order;
@@ -26,3 +27,4 @@ public class OrderService {
         return orderRepository.getOrders();
     }
 }
+*/

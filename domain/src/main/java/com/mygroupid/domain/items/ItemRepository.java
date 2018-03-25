@@ -17,4 +17,12 @@ public class ItemRepository {
     public List<Item> getItems() {
         return itemDatabase.getItems();
     }
+
+    public Item getItem(String id) {
+        return itemDatabase.getItem(id);
+    }
+
+    public Item updateItem(String id, Item item) {
+        return itemDatabase.updateItem(id, item);
+    }
 }

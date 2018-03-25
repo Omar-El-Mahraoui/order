@@ -1,3 +1,4 @@
+/*
 package com.mygroupid.api.orders;
 
 import com.mygroupid.api.customers.CustomerDto;
@@ -23,3 +24,4 @@ public class OrderDto {
         return itemGroup;
     }
 }
+*/

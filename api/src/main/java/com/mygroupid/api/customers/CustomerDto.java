@@ -1,3 +1,4 @@
+/*
 package com.mygroupid.api.customers;
 
 public class CustomerDto {
@@ -55,3 +56,4 @@ public class CustomerDto {
         return phoneNumber;
     }
 }
+*/

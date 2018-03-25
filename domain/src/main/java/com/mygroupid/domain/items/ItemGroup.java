@@ -1,3 +1,4 @@
+/*
 package com.mygroupid.domain.items;
 
 import java.math.BigDecimal;
@@ -100,3 +101,4 @@ public class ItemGroup {
         }
     }
 }
+*/

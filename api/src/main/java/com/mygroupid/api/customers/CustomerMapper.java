@@ -1,3 +1,4 @@
+/*
 package com.mygroupid.api.customers;
 
 import com.mygroupid.domain.customers.Customer;
@@ -30,3 +31,4 @@ public class CustomerMapper {
     }
 
 }
+*/

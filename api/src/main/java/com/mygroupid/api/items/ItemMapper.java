@@ -1,3 +1,4 @@
+/*
 package com.mygroupid.api.items;
 
 import com.mygroupid.domain.items.Item;
@@ -30,3 +31,4 @@ public class ItemMapper {
     }
 
 }
+*/

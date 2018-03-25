@@ -1,3 +1,4 @@
+/*
 package com.mygroupid.api.orders;
 
 import com.mygroupid.api.items.ItemDto;
@@ -20,3 +21,4 @@ public class ItemGroupDto {
         return amountOfItems;
     }
 }
+*/

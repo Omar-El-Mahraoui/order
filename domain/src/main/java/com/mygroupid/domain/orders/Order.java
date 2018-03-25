@@ -1,3 +1,4 @@
+/*
 package com.mygroupid.domain.orders;
 
 import com.mygroupid.domain.customers.Customer;
@@ -60,3 +61,4 @@ public class Order {
                 '}';
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.mygroupid.domain.orders;
 
 import javax.inject.Named;
@@ -23,3 +24,4 @@ public class OrderDatabase {
         return Collections.unmodifiableList(orders);
     }
 }
+*/

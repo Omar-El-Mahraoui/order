@@ -20,4 +20,12 @@ public class ItemService {
     public List<Item> getItems() {
         return itemRepository.getItems();
     }
+
+    public Item getItem(String id) {
+        return itemRepository.getItem(id);
+    }
+
+    public Item updateItem(String id, Item item) {
+        return itemRepository.updateItem(id, item);
+    }
 }
