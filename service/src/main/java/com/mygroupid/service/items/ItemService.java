@@ -35,7 +35,7 @@ public class ItemService {
         return setUrgencyIndicatorForItem(itemDatabase.updateItem(id, item));
     }
 
-    public Item setUrgencyIndicatorForItem(Item item) {
+    private Item setUrgencyIndicatorForItem(Item item) {
         if ((Integer.parseInt(item.getAmountInStock()) < 5 && orderService.wasOrderedInLast7Days(item.getId()))
                 || (Integer.parseInt(item.getAmountInStock()) < 3)) {
             item.setUrgencyIndicator(UrgencyIndicator.STOCK_LOW);

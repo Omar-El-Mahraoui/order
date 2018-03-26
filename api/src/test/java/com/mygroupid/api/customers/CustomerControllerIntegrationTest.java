@@ -1,8 +1,10 @@
 package com.mygroupid.api.customers;
 
 
+import com.mygroupid.api.orders.ItemGroupDto;
 import com.mygroupid.api.orders.ItemGroupMapper;
 import com.mygroupid.domain.customers.CustomerDatabase;
+import com.mygroupid.domain.items.Item;
 import com.mygroupid.domain.items.ItemDatabase;
 import com.mygroupid.domain.orders.OrderDatabase;
 import com.mygroupid.service.customers.CustomerService;
@@ -47,6 +49,8 @@ public class CustomerControllerIntegrationTest {
     private CustomerService customerService;
     @Inject
     private CustomerMapper customerMapper;
+    @Inject
+    private ItemService itemService;
 
     private CustomerDto createCustomerDto() {
         CustomerDto customerDto = new CustomerDto();
@@ -59,6 +63,19 @@ public class CustomerControllerIntegrationTest {
         return customerDto;
     }
 
+    private ItemGroupDto createItemGroupDto() {
+        Item item = new Item();
+        item.setName("pen");
+        item.setDescription("blue pen");
+        item.setPrice("1.00");
+        item.setAmountInStock("5");
+        itemService.createItem(item);
+        ItemGroupDto itemGroupDto = new ItemGroupDto();
+        itemGroupDto.setItemId(item.getId());
+        itemGroupDto.setAmount("4");
+        return itemGroupDto;
+    }
+
     @Test
     public void createCustomer_givenAnEmptyDatabaseAndACustomerDto_thenAddCustomerToCustomerDatabaseAnd(){
         // given
@@ -69,6 +86,28 @@ public class CustomerControllerIntegrationTest {
                         .postForObject(String.format("http://localhost:%s/%s", port, "customers")
                                         , customerDtoGiven
                                         , CustomerDto.class);
+
+        //then
+        assertThat(customerService.getCustomers()).hasSize(1);
+        assertThat(customerService.getCustomers().get(0).getFirstName()).isEqualTo(customerDtoGiven.getFirstName());
+        assertThat(customerService.getCustomers().get(0).getLastName()).isEqualTo(customerDtoGiven.getLastName());
+        assertThat(customerService.getCustomers().get(0).getEmailAddress()).isEqualTo(customerDtoGiven.getEmailAddress());
+        assertThat(customerService.getCustomers().get(0).getAddress()).isEqualTo(customerDtoGiven.getAddress());
+        assertThat(customerService.getCustomers().get(0).getPhoneNumber()).isEqualTo(customerDtoGiven.getPhoneNumber());
+    }
+
+    @Test
+    public void createOrder_givenACustomerIdAndAItemGroupDto_thenCreateOrderAndAddItToOrderDatabseAndUpdateItem(){
+        // given
+        CustomerDto customerDtoGiven = createCustomerDto();
+        String customerId = customerDtoGiven.getId();
+        ItemGroupDto itemGroupDto = createItemGroupDto();
+
+        //when
+        Order customerDtoReturned = new TestRestTemplate()
+                .postForObject(String.format("http://localhost:%s/%s", port, "customers")
+                        , customerDtoGiven
+                        , CustomerDto.class);
 
         //then
         assertThat(customerService.getCustomers()).hasSize(1);
@@ -110,26 +149,6 @@ public class CustomerControllerIntegrationTest {
         assertThat(customerService.getCustomers().get(0).getAddress()).isEqualTo(customerDtoGiven.getAddress());
         assertThat(customerService.getCustomers().get(0).getPhoneNumber()).isEqualTo(customerDtoGiven.getPhoneNumber());
 
-    }
-
-    private CustomerDto createCustomerDto() {
-        CustomerDto customerDto = new CustomerDto();
-        customerDto.setId(UUID.randomUUID().toString());
-        customerDto.setFirstName("Jan");
-        customerDto.setLastName("Janssens");
-        customerDto.setEmailAddress("jansemailaddress@exampleameil.com");
-        customerDto.setAddress("jansaddress");
-        customerDto.setPhoneNumber("0123456789");
-        return customerDto;
-    }
-
-
-    @SpringBootApplication(scanBasePackageClasses = {CustomerService.class, CustomerRepository.class, CustomerMapper.class})
-    public static class CustomerControllerIntegrationTestRunner {
-
-        public static void main(String[] args) {
-            run(CustomerControllerIntegrationTestRunner.class, args);
-        }
     }
     */
 }
