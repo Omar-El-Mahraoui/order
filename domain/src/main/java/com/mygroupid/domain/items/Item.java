@@ -12,16 +12,14 @@ public class Item {
     private String description;
     private String price;
     private String amountInStock;
+    private UrgencyIndicator urgencyIndicator;
 
     public Item() {
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {
         return id;
-    }
-
-    public void setId() {
-        this.id = UUID.randomUUID().toString();
     }
 
     public String getName() {
@@ -58,5 +56,13 @@ public class Item {
 
     public void decrementAmountInStock(String amountToSubtract) {
         this.amountInStock = valueOf(parseInt(amountInStock) - parseInt(amountToSubtract));
+    }
+
+    public UrgencyIndicator getUrgencyIndicator() {
+        return urgencyIndicator;
+    }
+
+    public void setUrgencyIndicator(UrgencyIndicator urgencyIndicator) {
+        this.urgencyIndicator = urgencyIndicator;
     }
 }

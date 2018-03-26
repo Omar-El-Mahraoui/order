@@ -17,7 +17,7 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping(path = "/today")
-    public List<Order> getItemsShippingToday() {
+    public List<Order> getOrdersShippingToday() {
         return orderService.getOrdersShippingToday();
     }
 

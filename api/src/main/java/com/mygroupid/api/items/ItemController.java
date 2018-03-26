@@ -24,8 +24,6 @@ public class ItemController {
         return itemService.getItems();
     }
 
-    //public List<Item>
-
     @GetMapping(path = "/{id}")
     public Item getItem(@PathVariable String id) {
         return itemService.getItem(id);
