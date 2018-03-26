@@ -3,7 +3,6 @@ package com.mygroupid.api.customers;
 import com.mygroupid.api.orders.ItemGroupDto;
 import com.mygroupid.api.orders.ItemGroupMapper;
 import com.mygroupid.domain.customers.Customer;
-import com.mygroupid.domain.orders.ItemGroup;
 import com.mygroupid.domain.orders.Order;
 import com.mygroupid.service.customers.CustomerService;
 import com.mygroupid.service.orders.OrderService;
