@@ -44,4 +44,8 @@ public class ItemDatabase {
         }
         return items.get(indexOfItemToUpdate);
     }
+
+    public void clearDatabase() {
+        items.clear();
+    }
 }

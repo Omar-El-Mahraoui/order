@@ -24,4 +24,8 @@ public class OrderDatabase {
     public List<Order> getOrders() {
         return unmodifiableList(orders);
     }
+
+    public void clearDatabase() {
+        orders.clear();
+    }
 }

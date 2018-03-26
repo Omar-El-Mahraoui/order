@@ -24,4 +24,8 @@ public class CustomerService {
     public Customer getCustomer(String id) {
         return customerDatabase.getCustomer(id);
     }
+
+    public void clearDatabase() {
+        customerDatabase.clearDatabase();
+    }
 }

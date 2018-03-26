@@ -106,4 +106,8 @@ public class OrderService {
                 .collect(toList())
                 .size() != 0;
     }
+
+    public void clearDatabase() {
+        orderDatabase.clearDatabase();
+    }
 }

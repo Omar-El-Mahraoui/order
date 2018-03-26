@@ -3,6 +3,7 @@ package com.mygroupid.api.customers;
 
 import com.mygroupid.api.orders.ItemGroupDto;
 import com.mygroupid.api.orders.ItemGroupMapper;
+import com.mygroupid.api.orders.OrderDto;
 import com.mygroupid.domain.customers.CustomerDatabase;
 import com.mygroupid.domain.items.Item;
 import com.mygroupid.domain.items.ItemDatabase;
@@ -10,6 +11,7 @@ import com.mygroupid.domain.orders.OrderDatabase;
 import com.mygroupid.service.customers.CustomerService;
 import com.mygroupid.service.items.ItemService;
 import com.mygroupid.service.orders.OrderService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -51,6 +53,15 @@ public class CustomerControllerIntegrationTest {
     private CustomerMapper customerMapper;
     @Inject
     private ItemService itemService;
+    @Inject
+    private OrderService orderService;
+
+    @Before
+    public void clearDatabase() {
+        orderService.clearDatabase();
+        itemService.clearDatabase();
+        customerService.clearDatabase();
+    }
 
     private CustomerDto createCustomerDto() {
         CustomerDto customerDto = new CustomerDto();
@@ -104,13 +115,13 @@ public class CustomerControllerIntegrationTest {
         ItemGroupDto itemGroupDto = createItemGroupDto();
 
         //when
-        Order customerDtoReturned = new TestRestTemplate()
-                .postForObject(String.format("http://localhost:%s/%s", port, "customers")
+        OrderDto orderDtoReturned = new TestRestTemplate()
+                .postForObject(String.format("http://localhost:%s/%s/%s", port, customerId, "order")
                         , customerDtoGiven
-                        , CustomerDto.class);
+                        , OrderDto.class);
 
         //then
-        assertThat(customerService.getCustomers()).hasSize(1);
+        assertThat(orderService.getOrders()).hasSize(1);
         assertThat(customerService.getCustomers().get(0).getFirstName()).isEqualTo(customerDtoGiven.getFirstName());
         assertThat(customerService.getCustomers().get(0).getLastName()).isEqualTo(customerDtoGiven.getLastName());
         assertThat(customerService.getCustomers().get(0).getEmailAddress()).isEqualTo(customerDtoGiven.getEmailAddress());
