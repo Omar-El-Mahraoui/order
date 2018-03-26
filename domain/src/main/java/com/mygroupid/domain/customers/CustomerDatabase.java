@@ -1,9 +1,7 @@
 package com.mygroupid.domain.customers;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.unmodifiableList;

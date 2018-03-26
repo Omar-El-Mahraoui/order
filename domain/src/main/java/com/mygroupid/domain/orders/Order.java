@@ -13,11 +13,6 @@ public class Order {
 
     public Order() {}
 
-    private String calculatePrice() {
-        return String.valueOf(Double.parseDouble(itemGroup.getItem().getPrice())
-                                * Integer.parseInt(itemGroup.getAmount()));
-    }
-
     public String getId() {
         return id;
     }
@@ -46,7 +41,7 @@ public class Order {
         return price;
     }
 
-    public void setPrice() {
-        this.price = calculatePrice();
+    public void setPrice(String price) {
+        this.price = price;
     }
 }
