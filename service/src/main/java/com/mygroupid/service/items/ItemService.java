@@ -3,15 +3,11 @@ package com.mygroupid.service.items;
 import com.mygroupid.domain.items.Item;
 import com.mygroupid.domain.items.ItemDatabase;
 import com.mygroupid.domain.items.UrgencyIndicator;
-import com.mygroupid.domain.orders.ItemGroup;
 import com.mygroupid.service.orders.OrderService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.time.LocalDate;
 import java.util.List;
-
-import static java.lang.Integer.parseInt;
 
 @Named
 public class ItemService {
