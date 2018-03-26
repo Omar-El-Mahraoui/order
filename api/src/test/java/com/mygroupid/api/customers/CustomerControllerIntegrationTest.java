@@ -1,9 +1,13 @@
-/*
 package com.mygroupid.api.customers;
 
 
+import com.mygroupid.api.orders.ItemGroupMapper;
+import com.mygroupid.domain.customers.CustomerDatabase;
+import com.mygroupid.domain.items.ItemDatabase;
+import com.mygroupid.domain.orders.OrderDatabase;
 import com.mygroupid.service.customers.CustomerService;
-import org.junit.Before;
+import com.mygroupid.service.items.ItemService;
+import com.mygroupid.service.orders.OrderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +18,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.inject.Inject;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.SpringApplication.run;
 // copied and adapted code from funiversity
@@ -23,6 +29,17 @@ import static org.springframework.boot.SpringApplication.run;
                         , webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CustomerControllerIntegrationTest {
 
+    @SpringBootApplication(scanBasePackageClasses = {OrderService.class, CustomerService.class
+                                                    , CustomerDatabase.class, CustomerMapper.class
+                                                    , OrderDatabase.class, ItemService.class
+                                                    , ItemDatabase.class, ItemGroupMapper.class})
+    public static class CustomerControllerIntegrationTestRunner {
+
+        public static void main(String[] args) {
+            run(CustomerControllerIntegrationTestRunner.class, args);
+        }
+    }
+
     @LocalServerPort
     private int port;
 
@@ -31,13 +48,19 @@ public class CustomerControllerIntegrationTest {
     @Inject
     private CustomerMapper customerMapper;
 
-    @Before
-    public void clearDatabase() {
-        customerService.clearDatabase();
+    private CustomerDto createCustomerDto() {
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setId(UUID.randomUUID().toString());
+        customerDto.setFirstName("Jan");
+        customerDto.setLastName("Janssens");
+        customerDto.setEmailAddress("jansemailaddress@exampleameil.com");
+        customerDto.setAddress("jansaddress");
+        customerDto.setPhoneNumber("0123456789");
+        return customerDto;
     }
 
     @Test
-    public void createCustomer_givenAnEmptyDatabaseAndACustomer_thenAddCustomerToCustomerDatabaseAndReturnThisCustomer(){
+    public void createCustomer_givenAnEmptyDatabaseAndACustomerDto_thenAddCustomerToCustomerDatabaseAnd(){
         // given
         CustomerDto customerDtoGiven = createCustomerDto();
 
@@ -48,8 +71,6 @@ public class CustomerControllerIntegrationTest {
                                         , CustomerDto.class);
 
         //then
-        assertThat(customerDtoReturned).isEqualToIgnoringGivenFields(customerMapper.toDomain(customerDtoGiven)
-                                                                        , "id");
         assertThat(customerService.getCustomers()).hasSize(1);
         assertThat(customerService.getCustomers().get(0).getFirstName()).isEqualTo(customerDtoGiven.getFirstName());
         assertThat(customerService.getCustomers().get(0).getLastName()).isEqualTo(customerDtoGiven.getLastName());
@@ -58,6 +79,7 @@ public class CustomerControllerIntegrationTest {
         assertThat(customerService.getCustomers().get(0).getPhoneNumber()).isEqualTo(customerDtoGiven.getPhoneNumber());
     }
 
+    /*
     @Test
     public void getCustomers_givenAnEmptyDatabase_thenReturnAnEmptyArrayList(){
         // given
@@ -91,12 +113,14 @@ public class CustomerControllerIntegrationTest {
     }
 
     private CustomerDto createCustomerDto() {
-        return customerDto()
-                .withFirstName("Jan")
-                .withLastName("Janssens")
-                .withEmailAddress("jansemailaddress@example.com")
-                .withAddress("jansaddress")
-                .withPhoneNumber("0123456789");
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setId(UUID.randomUUID().toString());
+        customerDto.setFirstName("Jan");
+        customerDto.setLastName("Janssens");
+        customerDto.setEmailAddress("jansemailaddress@exampleameil.com");
+        customerDto.setAddress("jansaddress");
+        customerDto.setPhoneNumber("0123456789");
+        return customerDto;
     }
 
 
@@ -107,6 +131,5 @@ public class CustomerControllerIntegrationTest {
             run(CustomerControllerIntegrationTestRunner.class, args);
         }
     }
-
+    */
 }
-*/
