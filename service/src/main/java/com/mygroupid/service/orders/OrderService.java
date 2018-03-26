@@ -8,6 +8,7 @@ import com.mygroupid.service.customers.CustomerService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.time.LocalDate;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -19,6 +20,10 @@ public class OrderService {
     private CustomerService customerService;
     @Inject
     private OrderDatabase orderDatabase;
+
+    public List<Order> getOrders() {
+        return orderDatabase.getOrders();
+    }
 
     public Order createOrder(String customerId, ItemGroup itemGroup) {
         Order order = new Order();
@@ -45,5 +50,11 @@ public class OrderService {
                 .get();
         createOrder(customerId, orderToReOrder.getItemGroup());
         return orderToReOrder;
+    }
+
+    public List<Order> getOrdersShippingToday() {
+        return getOrders().stream()
+                .filter(order->order.getItemGroup().getShippingDate().equals(LocalDate.now().toString()))
+                .collect(toList());
     }
 }
