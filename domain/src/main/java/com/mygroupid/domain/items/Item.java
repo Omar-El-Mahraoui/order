@@ -2,6 +2,9 @@ package com.mygroupid.domain.items;
 
 import java.util.UUID;
 
+import static java.lang.Integer.parseInt;
+import static java.lang.String.valueOf;
+
 public class Item {
 
     private String id;
@@ -11,11 +14,14 @@ public class Item {
     private String amountInStock;
 
     public Item() {
-        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {
         return id;
+    }
+
+    public void setId() {
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getName() {
@@ -48,5 +54,9 @@ public class Item {
 
     public void setAmountInStock(String amountInStock) {
         this.amountInStock = amountInStock;
+    }
+
+    public void decrementAmountInStock(String amountToSubtract) {
+        this.amountInStock = valueOf(parseInt(amountInStock) - parseInt(amountToSubtract));
     }
 }

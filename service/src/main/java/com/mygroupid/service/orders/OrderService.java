@@ -33,6 +33,7 @@ public class OrderService {
         order.setItemGroup(itemGroup);
         order.setPrice();
         orderDatabase.createOrder(order);
+        itemGroup.getItem().decrementAmountInStock(itemGroup.getAmount());
         return order;
     }
 
@@ -49,6 +50,8 @@ public class OrderService {
                 .findFirst()
                 .get();
         createOrder(customerId, orderToReOrder.getItemGroup());
+        orderToReOrder.getItemGroup().getItem()
+                .decrementAmountInStock(orderToReOrder.getItemGroup().getAmount());
         return orderToReOrder;
     }
 
