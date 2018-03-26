@@ -15,6 +15,7 @@ import java.util.List;
 
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
+import static java.lang.String.format;
 import static java.time.LocalDate.now;
 import static java.time.LocalDate.parse;
 import static java.time.Period.between;
@@ -50,6 +51,7 @@ public class OrderService {
     }
 
     public Order createOrder(String customerId, ItemGroup itemGroup) {
+        validateOrder(itemGroup);
         Order order = new Order();
         order.setId();
         order.setCustomer(customerService.getCustomer(customerId));
@@ -59,6 +61,14 @@ public class OrderService {
         itemService.getItem(itemGroup.getItemId()).decrementAmountInStock(itemGroup.getAmount());
         itemService.setUrgencyIndicatorForItem(itemService.getItem(itemGroup.getItemId()));
         return orderDatabase.createOrder(order);
+    }
+
+    private void validateOrder(ItemGroup itemGroup) {
+        if (parseInt(itemGroup.getAmount()) > parseInt(itemService.getItem(itemGroup.getItemId()).getAmountInStock())) {
+            throw new IllegalArgumentException(format("Out of stock. There are only %s \"%s\" available."
+                                                        , itemService.getItem(itemGroup.getItemId()).getAmountInStock()
+                                                        , itemService.getItem(itemGroup.getItemId()).getName()));
+        }
     }
 
     public List<Order> getReportOfOrders(String customerId) {
