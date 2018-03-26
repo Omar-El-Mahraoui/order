@@ -1,8 +1,7 @@
 /*
 package com.mygroupid.api.customers;
 
-import com.mygroupid.domain.customers.Customer;
-import com.mygroupid.domain.customers.CustomerRepository;
+
 import com.mygroupid.service.customers.CustomerService;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.inject.Inject;
 
-import static com.mygroupid.api.customers.CustomerDto.customerDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.SpringApplication.run;
 // copied and adapted code from funiversity

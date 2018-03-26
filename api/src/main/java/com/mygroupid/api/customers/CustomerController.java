@@ -18,10 +18,13 @@ public class CustomerController {
     private CustomerService customerService;
     @Inject
     private OrderService orderService;
+    @Inject
+    private CustomerMapper customerMapper;
 
     @PostMapping
-    public Customer createCustomer(@RequestBody Customer customer) {
-        return customerService.createCustomer(customer);
+    public CustomerDto createCustomer(@RequestBody CustomerDto customerDto) {
+        return customerMapper.toDto(
+                customerService.createCustomer(customerMapper.toDomain(customerDto)));
     }
 
     @GetMapping

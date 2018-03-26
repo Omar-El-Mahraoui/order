@@ -1,8 +1,8 @@
-package com.mygroupid.domain.customers;
+package com.mygroupid.api.customers;
 
 import java.util.UUID;
 
-public class Customer {
+public class CustomerDto {
 
     private String id;
     private String firstName;
@@ -11,8 +11,7 @@ public class Customer {
     private String address;
     private String phoneNumber;
 
-    public Customer() {
-        this.id = UUID.randomUUID().toString();
+    public CustomerDto() {
     }
 
     public String getFirstName() {
@@ -58,4 +57,9 @@ public class Customer {
     public String getId() {
         return id;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 }
