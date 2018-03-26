@@ -1,13 +1,6 @@
 package com.mygroupid.domain.orders;
 
-import com.mygroupid.domain.items.ItemDatabase;
-
-import javax.inject.Inject;
-
 public class ItemGroup {
-
-    @Inject
-    private ItemDatabase itemDatabase;
 
     private String itemId;
     private String amount;

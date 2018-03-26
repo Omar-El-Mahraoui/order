@@ -42,7 +42,7 @@ public class OrderService {
 
     public String calculateShippingDate(ItemGroup itemGroup) {
         Item item = itemService.getItem(itemGroup.getItemId());
-        if (parseInt(item.getAmountInStock()) >= parseInt(item.getAmountInStock())) {
+        if (parseInt(item.getAmountInStock()) >= parseInt(itemGroup.getAmount())) {
             return LocalDate.now().plusDays(1).toString();
         } else {
             return LocalDate.now().plusDays(7).toString();
