@@ -4,9 +4,12 @@ package com.mygroupid.api.customers;
 import com.mygroupid.api.orders.ItemGroupDto;
 import com.mygroupid.api.orders.ItemGroupMapper;
 import com.mygroupid.api.orders.OrderDto;
+import com.mygroupid.domain.customers.Customer;
 import com.mygroupid.domain.customers.CustomerDatabase;
 import com.mygroupid.domain.items.Item;
 import com.mygroupid.domain.items.ItemDatabase;
+import com.mygroupid.domain.orders.ItemGroup;
+import com.mygroupid.domain.orders.Order;
 import com.mygroupid.domain.orders.OrderDatabase;
 import com.mygroupid.service.customers.CustomerService;
 import com.mygroupid.service.items.ItemService;
@@ -18,6 +21,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.inject.Inject;
@@ -33,10 +37,7 @@ import static org.springframework.boot.SpringApplication.run;
                         , webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CustomerControllerIntegrationTest {
 
-    @SpringBootApplication(scanBasePackageClasses = {OrderService.class, CustomerService.class
-                                                    , CustomerDatabase.class, CustomerMapper.class
-                                                    , OrderDatabase.class, ItemService.class
-                                                    , ItemDatabase.class, ItemGroupMapper.class})
+    @SpringBootApplication(scanBasePackages = {"com.mygroupid"})
     public static class CustomerControllerIntegrationTestRunner {
 
         public static void main(String[] args) {
@@ -55,6 +56,8 @@ public class CustomerControllerIntegrationTest {
     private ItemService itemService;
     @Inject
     private OrderService orderService;
+    @Inject
+    private ItemGroupMapper itemGroupMapper;
 
     @Before
     public void clearDatabase() {
@@ -110,23 +113,45 @@ public class CustomerControllerIntegrationTest {
     @Test
     public void createOrder_givenACustomerIdAndAItemGroupDto_thenCreateOrderAndAddItToOrderDatabseAndUpdateItem(){
         // given
-        CustomerDto customerDtoGiven = createCustomerDto();
+        Customer customer = new Customer();
+        customer.setFirstName("Jan");
+        customer.setLastName("Janssens");
+        customer.setEmailAddress("jansemailaddress@exampleemail.com");
+        customer.setAddress("jansaddress");
+        customer.setPhoneNumber("0123456789");
+        customerService.createCustomer(customer);
+
+        Item item = new Item();
+        item.setName("pen");
+        item.setDescription("blue pen");
+        item.setPrice("1.00");
+        item.setAmountInStock("5");
+        itemService.createItem(item);
+
+        ItemGroup itemGroup = new ItemGroup();
+        itemGroup.setItemId(item.getId());
+        itemGroup.setAmount("4");
+
+        ItemGroupDto itemGroupDto = itemGroupMapper.toDto(itemGroup);
+
+
+        /*CustomerDto customerDtoGiven = createCustomerDto();
         String customerId = customerDtoGiven.getId();
-        ItemGroupDto itemGroupDto = createItemGroupDto();
+        ItemGroupDto itemGroupDto = createItemGroupDto();*/
 
         //when
         OrderDto orderDtoReturned = new TestRestTemplate()
-                .postForObject(String.format("http://localhost:%s/%s/%s", port, customerId, "order")
-                        , customerDtoGiven
+                .postForObject(String.format("http://localhost:%s/%s/%s", port, customer.getId(), "order")
+                        , itemGroupDto
                         , OrderDto.class);
 
         //then
         assertThat(orderService.getOrders()).hasSize(1);
-        assertThat(customerService.getCustomers().get(0).getFirstName()).isEqualTo(customerDtoGiven.getFirstName());
+        /*assertThat(customerService.getCustomers().get(0).getFirstName()).isEqualTo(customerDtoGiven.getFirstName());
         assertThat(customerService.getCustomers().get(0).getLastName()).isEqualTo(customerDtoGiven.getLastName());
         assertThat(customerService.getCustomers().get(0).getEmailAddress()).isEqualTo(customerDtoGiven.getEmailAddress());
         assertThat(customerService.getCustomers().get(0).getAddress()).isEqualTo(customerDtoGiven.getAddress());
-        assertThat(customerService.getCustomers().get(0).getPhoneNumber()).isEqualTo(customerDtoGiven.getPhoneNumber());
+        assertThat(customerService.getCustomers().get(0).getPhoneNumber()).isEqualTo(customerDtoGiven.getPhoneNumber());*/
     }
 
     /*

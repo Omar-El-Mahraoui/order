@@ -2,6 +2,8 @@ package com.mygroupid.api.customers;
 
 import com.mygroupid.api.orders.ItemGroupDto;
 import com.mygroupid.api.orders.ItemGroupMapper;
+import com.mygroupid.api.orders.OrderDto;
+import com.mygroupid.api.orders.OrderMapper;
 import com.mygroupid.domain.customers.Customer;
 import com.mygroupid.domain.orders.Order;
 import com.mygroupid.service.customers.CustomerService;
@@ -23,6 +25,8 @@ public class CustomerController {
     private CustomerMapper customerMapper;
     @Inject
     private ItemGroupMapper itemGroupMapper;
+    @Inject
+    private OrderMapper orderMapper;
 
     @PostMapping
     public CustomerDto createCustomer(@RequestBody CustomerDto customerDto) {
@@ -41,9 +45,9 @@ public class CustomerController {
     }
 
     @PostMapping(path = "/{customerId}/order")
-    public Order createOrder(@PathVariable String customerId
+    public OrderDto createOrder(@PathVariable String customerId
                             , @RequestBody ItemGroupDto itemGroupDto) {
-        return orderService.createOrder(customerId, itemGroupMapper.toDomain(itemGroupDto));
+        return orderMapper.toDto(orderService.createOrder(customerId, itemGroupMapper.toDomain(itemGroupDto)));
     }
 
     @GetMapping(path = "/{customerId}/orders")
