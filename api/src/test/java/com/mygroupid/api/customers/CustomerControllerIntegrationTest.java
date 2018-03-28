@@ -141,7 +141,7 @@ public class CustomerControllerIntegrationTest {
 
         //when
         OrderDto orderDtoReturned = new TestRestTemplate()
-                .postForObject(String.format("http://localhost:%s/%s/%s", port, customer.getId(), "order")
+                .postForObject(String.format("http://localhost:%s/customers/%s/%s", port, customer.getId(), "order")
                         , itemGroupDto
                         , OrderDto.class);
 
