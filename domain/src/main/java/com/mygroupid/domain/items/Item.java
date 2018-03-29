@@ -1,5 +1,6 @@
 package com.mygroupid.domain.items;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import static java.lang.Integer.parseInt;
@@ -20,6 +21,10 @@ public class Item {
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -64,5 +69,36 @@ public class Item {
 
     public void setUrgencyIndicator(UrgencyIndicator urgencyIndicator) {
         this.urgencyIndicator = urgencyIndicator;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Objects.equals(id, item.id) &&
+                Objects.equals(name, item.name) &&
+                Objects.equals(description, item.description) &&
+                Objects.equals(price, item.price) &&
+                Objects.equals(amountInStock, item.amountInStock) &&
+                urgencyIndicator == item.urgencyIndicator;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, description, price, amountInStock, urgencyIndicator);
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price='" + price + '\'' +
+                ", amountInStock='" + amountInStock + '\'' +
+                ", urgencyIndicator=" + urgencyIndicator +
+                '}';
     }
 }
