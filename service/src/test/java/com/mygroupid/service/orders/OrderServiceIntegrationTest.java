@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.inject.Inject;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.SpringApplication.run;
 // copied and adapted code from funiversity
@@ -57,6 +59,54 @@ public class OrderServiceIntegrationTest {
         // then
         assertThat(orderService.getOrders())
                 .hasSize(1);
+    }
+
+    @Test
+    public void calculateShippingDate_givenAnItemGroupWithARequestedItemThatIsInStock_thenReturnDateOfTomorrow() {
+        //given
+        Item item = new Item();
+        item.setName("pen");
+        item.setDescription("blue pen");
+        item.setPrice("1.00");
+        item.setAmountInStock("5");
+        itemService.createItem(item);
+
+        ItemGroup itemGroup = new ItemGroup();
+        itemGroup.setItemId(item.getId());
+        itemGroup.setAmount("4");
+
+        String expectedResult = LocalDate.now().plusDays(1).toString();
+
+        //when
+        String actualResult = orderService.calculateShippingDate(itemGroup);
+
+        //then
+        assertThat(actualResult)
+                .isEqualTo(expectedResult);
+    }
+
+    @Test
+    public void calculateShippingDate_givenAnItemGroupWithARequestedItemThatIsNotInStock_thenReturnDateOfTodayPlus7Days() {
+        //given
+        Item item = new Item();
+        item.setName("pen");
+        item.setDescription("blue pen");
+        item.setPrice("1.00");
+        item.setAmountInStock("5");
+        itemService.createItem(item);
+
+        ItemGroup itemGroup = new ItemGroup();
+        itemGroup.setItemId(item.getId());
+        itemGroup.setAmount("8");
+
+        String expectedResult = LocalDate.now().plusDays(7).toString();
+
+        //when
+        String actualResult = orderService.calculateShippingDate(itemGroup);
+
+        //then
+        assertThat(actualResult)
+                .isEqualTo(expectedResult);
     }
 
     @SpringBootApplication(scanBasePackages = {"com.mygroupid"})
