@@ -1,5 +1,5 @@
-package com.mygroupid.service.items;
 // copied and adapted code from funiversity
+package com.mygroupid.service.items;
 
 import com.mygroupid.domain.items.Item;
 import com.mygroupid.domain.items.ItemDatabase;
@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.when;
