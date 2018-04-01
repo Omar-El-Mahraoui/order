@@ -69,7 +69,7 @@ public class CustomerControllerIntegrationTest {
     }*/
 
     @Test
-    public void createCustomer_givenAnEmptyDatabaseAndACustomerDto_thenAddCustomerToCustomerDatabaseAndReturnCustomerDto(){
+    public void createCustomer_givenAnEmptyDatabaseAndACustomerDto_thenAddCustomerToCustomerDatabaseAndReturnThisCustomerDto(){
         // given
         CustomerDto customerDtoGiven = customerDto()
                 .withFirstName("Jan")
