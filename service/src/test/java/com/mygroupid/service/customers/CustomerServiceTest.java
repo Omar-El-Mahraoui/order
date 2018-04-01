@@ -2,6 +2,7 @@ package com.mygroupid.service.customers;
 
 import com.mygroupid.domain.customers.Customer;
 import com.mygroupid.domain.customers.CustomerDatabase;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -12,6 +13,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mygroupid.domain.customers.Customer.CustomerBuilder.customer;
 import static java.util.Collections.unmodifiableList;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,10 +26,15 @@ public class CustomerServiceTest {
     @InjectMocks
     private CustomerService customerService;
 
+    @Before
+    public void clearCustomerDatabase() {
+        customerDatabase.clearDatabase();
+    }
+
     @Test
     public void createCustomer_givenACustomer_thenCallCreateCustomerOfCustomerDatabaseAndReturnTheCustomer() {
         // given
-        Customer customer = Customer.CustomerBuilder.customer()
+        Customer customer = customer()
                                 .withFirstName("Jan")
                                 .withLastName("Janssens")
                                 .withEmailAddress("jansemailaddress@example.com")
@@ -59,7 +66,7 @@ public class CustomerServiceTest {
     public void getCustomers_givenANonEmptyCustomerDatabase_thenReturnTheListOfCustomers() {
         // given
         List<Customer> customers = new ArrayList<>();
-        customers.add(Customer.CustomerBuilder.customer()
+        customers.add(customer()
                 .withFirstName("Jan")
                 .withLastName("Janssens")
                 .withEmailAddress("jansemailaddress@example.com")
@@ -73,6 +80,25 @@ public class CustomerServiceTest {
 
         //then
         assertThat(actualResult).isEqualTo(customers);
+    }
+
+    @Test
+    public void getCustomer_givenACustomerIdThatIsPresentInCustomerDatabase_thenReturnThisCustomer() {
+        // given
+        Customer customer = customer()
+                .withFirstName("Jan")
+                .withLastName("Janssens")
+                .withEmailAddress("jansemailaddress@example.com")
+                .withAddress("jansaddress")
+                .withPhoneNumber("0123456789")
+                .build();
+        Mockito.when(customerDatabase.getCustomer(customer.getId())).thenReturn(customer);
+
+        //when
+        Customer actualResult = customerService.getCustomer(customer.getId());
+
+        //then
+        assertThat(actualResult).isEqualTo(customer);
     }
 
 }

@@ -2,6 +2,7 @@ package com.mygroupid.service.customers;
 
 import com.mygroupid.domain.customers.Customer;
 import com.mygroupid.domain.customers.CustomerDatabase;
+import com.mygroupid.service.exceptions.UnknownResourceException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,6 +23,9 @@ public class CustomerService {
     }
 
     public Customer getCustomer(String id) {
+        if (customerDatabase.getCustomer(id) == null) {
+            throw new UnknownResourceException("ID", Customer.class.getSimpleName());
+        }
         return customerDatabase.getCustomer(id);
     }
 

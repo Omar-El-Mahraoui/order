@@ -28,7 +28,7 @@ public class CustomerDatabase {
         return customers.stream()
                 .filter(c->c.getId().equals(id))
                 .findFirst()
-                .get();
+                .orElse(null);
     }
 
     public void clearDatabase() {
