@@ -4,28 +4,29 @@ import com.mygroupid.domain.customers.Customer;
 
 import javax.inject.Named;
 
+import static com.mygroupid.api.customers.CustomerDto.customerDto;
+
 @Named
 public class CustomerMapper {
 
     public CustomerDto toDto(Customer customer) {
-        CustomerDto customerDto = new CustomerDto();
-        customerDto.setId(customer.getId());
-        customerDto.setFirstName(customer.getFirstName());
-        customerDto.setLastName(customer.getLastName());
-        customerDto.setEmailAddress(customer.getEmailAddress());
-        customerDto.setAddress(customer.getAddress());
-        customerDto.setPhoneNumber(customer.getPhoneNumber());
-        return customerDto;
+        return customerDto()
+                .withId(customer.getId())
+                .withFirstName(customer.getFirstName())
+                .withLastName(customer.getLastName())
+                .withEmailAddress(customer.getEmailAddress())
+                .withAddress(customer.getAddress())
+                .withPhoneNumber(customer.getAddress());
     }
 
     public Customer toDomain(CustomerDto customerDto) {
-        Customer customer = new Customer();
-        customer.setFirstName(customerDto.getFirstName());
-        customer.setLastName(customerDto.getLastName());
-        customer.setEmailAddress(customerDto.getEmailAddress());
-        customer.setAddress(customerDto.getAddress());
-        customer.setPhoneNumber(customerDto.getPhoneNumber());
-        return customer;
+        return Customer.CustomerBuilder.customer()
+                .withFirstName(customerDto.getFirstName())
+                .withLastName(customerDto.getLastName())
+                .withEmailAddress(customerDto.getEmailAddress())
+                .withAddress(customerDto.getAddress())
+                .withPhoneNumber(customerDto.getPhoneNumber())
+                .build();
     }
 
 }
