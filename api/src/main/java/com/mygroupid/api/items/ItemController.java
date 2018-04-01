@@ -7,6 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping(path = "/items")
@@ -22,6 +26,14 @@ public class ItemController {
     public ItemDto createItem(@RequestBody ItemDto itemDto) {
         return itemMapper.toDto(
                 itemService.createItem(itemMapper.toDomain(itemDto)));
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<ItemDto> getItems() {
+        return itemService.getItems().stream()
+                .map(itemMapper::toDto)
+                .collect(toList());
     }
 
 }
