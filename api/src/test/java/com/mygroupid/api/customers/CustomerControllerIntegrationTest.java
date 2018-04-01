@@ -1,3 +1,4 @@
+/*
 package com.mygroupid.api.customers;
 
 
@@ -135,9 +136,11 @@ public class CustomerControllerIntegrationTest {
         ItemGroupDto itemGroupDto = itemGroupMapper.toDto(itemGroup);
 
 
-        /*CustomerDto customerDtoGiven = createCustomerDto();
+        */
+/*CustomerDto customerDtoGiven = createCustomerDto();
         String customerId = customerDtoGiven.getId();
-        ItemGroupDto itemGroupDto = createItemGroupDto();*/
+        ItemGroupDto itemGroupDto = createItemGroupDto();*//*
+
 
         //when
         OrderDto orderDtoReturned = new TestRestTemplate()
@@ -147,12 +150,15 @@ public class CustomerControllerIntegrationTest {
 
         //then
         assertThat(orderService.getOrders()).hasSize(1);
-        /*assertThat(customerService.getCustomers().get(0).getFirstName()).isEqualTo(customerDtoGiven.getFirstName());
+        */
+/*assertThat(customerService.getCustomers().get(0).getFirstName()).isEqualTo(customerDtoGiven.getFirstName());
         assertThat(customerService.getCustomers().get(0).getLastName()).isEqualTo(customerDtoGiven.getLastName());
-        assertThat(customerService.getCustomers().get(0).getEmailAddress()).isEqualTo(customerDtoGiven.getEmailAddress());*/
+        assertThat(customerService.getCustomers().get(0).getEmailAddress()).isEqualTo(customerDtoGiven.getEmailAddress());*//*
+
     }
 
-    /*
+    */
+/*
     @Test
     public void getCustomers_givenAnEmptyDatabase_thenReturnAnEmptyArrayList(){
         // given
@@ -184,5 +190,7 @@ public class CustomerControllerIntegrationTest {
         assertThat(customerService.getCustomers().get(0).getPhoneNumber()).isEqualTo(customerDtoGiven.getPhoneNumber());
 
     }
-    */
+    *//*
+
 }
+*/

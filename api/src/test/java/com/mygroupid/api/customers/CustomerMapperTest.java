@@ -1,4 +1,3 @@
-/*
 package com.mygroupid.api.customers;
 
 import com.mygroupid.domain.customers.Customer;
@@ -8,14 +7,14 @@ import org.junit.Test;
 import static com.mygroupid.api.customers.CustomerDto.customerDto;
 import static com.mygroupid.domain.customers.Customer.CustomerBuilder.customer;
 import static org.assertj.core.api.Assertions.assertThat;
-// copied parts from funiversity mapper
+// copied parts from funiversity mapper (switchfully)
 
 public class CustomerMapperTest {
 
     private CustomerMapper customerMapper;
 
     @Before
-    public void initiateMapper() {
+    public void instantiateCustomerMapper() {
         customerMapper = new CustomerMapper();
     }
 
@@ -25,7 +24,7 @@ public class CustomerMapperTest {
         Customer customer = customer()
                                 .withFirstName("Jan")
                                 .withLastName("Janssens")
-                                .withEmailAddress("janjanssensemail@email.com")
+                                .withEmailAddress("janjanssensemail@exampleemail.com")
                                 .withAddress("jansaddress")
                                 .withPhoneNumber("0123456789")
                                 .build();
@@ -57,4 +56,3 @@ public class CustomerMapperTest {
     }
 
 }
-*/
