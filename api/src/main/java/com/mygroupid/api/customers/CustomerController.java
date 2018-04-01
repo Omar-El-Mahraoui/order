@@ -1,17 +1,11 @@
 package com.mygroupid.api.customers;
 
-import com.mygroupid.api.orders.ItemGroupDto;
-import com.mygroupid.api.orders.ItemGroupMapper;
-import com.mygroupid.api.orders.OrderDto;
-import com.mygroupid.api.orders.OrderMapper;
-import com.mygroupid.domain.customers.Customer;
-import com.mygroupid.domain.orders.Order;
 import com.mygroupid.service.customers.CustomerService;
-import com.mygroupid.service.orders.OrderService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/customers")
@@ -20,13 +14,8 @@ public class CustomerController {
     @Inject
     private CustomerService customerService;
     @Inject
-    private OrderService orderService;
-    @Inject
     private CustomerMapper customerMapper;
-    @Inject
-    private ItemGroupMapper itemGroupMapper;
-    @Inject
-    private OrderMapper orderMapper;
+
 
     @PostMapping
     public CustomerDto createCustomer(@RequestBody CustomerDto customerDto) {
@@ -35,30 +24,10 @@ public class CustomerController {
     }
 
     @GetMapping
-    public List<Customer> getCustomers() {
-        return customerService.getCustomers();
-    }
-
-    @GetMapping(path = "/{customerId}")
-    public Customer getCustomer(@PathVariable String customerId) {
-        return customerService.getCustomer(customerId);
-    }
-
-    @PostMapping(path = "/{customerId}/order")
-    public OrderDto createOrder(@PathVariable String customerId
-                            , @RequestBody ItemGroupDto itemGroupDto) {
-        return orderMapper.toDto(orderService.createOrder(customerId, itemGroupMapper.toDomain(itemGroupDto)));
-    }
-
-    @GetMapping(path = "/{customerId}/orders")
-    public List<Order> getReportOfOrders(@PathVariable String customerId) {
-        return orderService.getReportOfOrders(customerId);
-    }
-
-    @PostMapping(path = "/{customerId}/re-order")
-    public Order createReOrder(@PathVariable String customerId
-            , @RequestParam String orderId) {
-        return orderService.createReOrder(customerId, orderId);
+    public List<CustomerDto> getCustomers() {
+        return customerService.getCustomers().stream()
+                .map(customerMapper::toDto)
+                .collect(Collectors.toList());
     }
 
 }

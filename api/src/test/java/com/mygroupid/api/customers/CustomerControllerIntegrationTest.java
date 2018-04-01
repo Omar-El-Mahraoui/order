@@ -1,10 +1,7 @@
 package com.mygroupid.api.customers;
 
 
-import com.mygroupid.api.orders.ItemGroupMapper;
 import com.mygroupid.service.customers.CustomerService;
-import com.mygroupid.service.items.ItemService;
-import com.mygroupid.service.orders.OrderService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,33 +37,13 @@ public class CustomerControllerIntegrationTest {
     @Inject
     private CustomerService customerService;
     @Inject
-    private CustomerMapper customerMapper;
-    @Inject
-    private ItemService itemService;
-    @Inject
-    private OrderService orderService;
-    @Inject
-    private ItemGroupMapper itemGroupMapper;
+    private CustomerController customerController;
 
     @Before
     public void clearDatabase() {
-        orderService.clearDatabase();
-        itemService.clearDatabase();
         customerService.clearDatabase();
     }
 
-    /*private ItemGroupDto createItemGroupDto() {
-        Item item = new Item();
-        item.setName("pen");
-        item.setDescription("blue pen");
-        item.setPrice("1.00");
-        item.setAmountInStock("5");
-        itemService.createItem(item);
-        ItemGroupDto itemGroupDto = new ItemGroupDto();
-        itemGroupDto.setItemId(item.getId());
-        itemGroupDto.setAmount("4");
-        return itemGroupDto;
-    }*/
 
     @Test
     public void createCustomer_givenAnEmptyDatabaseAndACustomerDto_thenAddCustomerToCustomerDatabaseAndReturnThisCustomerDto(){
@@ -93,82 +70,43 @@ public class CustomerControllerIntegrationTest {
         assertThat(customerService.getCustomers().get(0).getAddress()).isEqualTo(customerDtoGiven.getAddress());
         assertThat(customerService.getCustomers().get(0).getPhoneNumber()).isEqualTo(customerDtoGiven.getPhoneNumber());
     }
-/*
+
     @Test
-    public void createOrder_givenACustomerIdAndAItemGroupDto_thenCreateOrderAndAddItToOrderDatabseAndUpdateItem(){
+    public void getCustomers_givenAnEmptyCustomerDatabase_thenReturnAnEmptyList(){
         // given
-        Customer customer = new Customer();
-        customer.setFirstName("Jan");
-        customer.setLastName("Janssens");
-        customer.setEmailAddress("jansemailaddress@exampleemail.com");
-        customer.setAddress("jansaddress");
-        customer.setPhoneNumber("0123456789");
-        customerService.createCustomer(customer);
-
-        Item item = new Item();
-        item.setName("pen");
-        item.setDescription("blue pen");
-        item.setPrice("1.00");
-        item.setAmountInStock("5");
-        itemService.createItem(item);
-
-        ItemGroup itemGroup = new ItemGroup();
-        itemGroup.setItemId(item.getId());
-        itemGroup.setAmount("4");
-
-        ItemGroupDto itemGroupDto = itemGroupMapper.toDto(itemGroup);
-
-
-        CustomerDto customerDtoGiven = createCustomerDto();
-        String customerId = customerDtoGiven.getId();
-        ItemGroupDto itemGroupDto = createItemGroupDto();
-
-
         //when
-        OrderDto orderDtoReturned = new TestRestTemplate()
-                .postForObject(String.format("http://localhost:%s/customers/%s/%s", port, customer.getId(), "order")
-                        , itemGroupDto
-                        , OrderDto.class);
+        //https://stackoverflow.com/questions/23674046/get-list-of-json-objects-with-spring-resttemplate
+        CustomerDto[] customerDtoListReturned = new TestRestTemplate()
+                .getForObject(String.format("http://localhost:%s/%s", port, "customers")
+                        , CustomerDto[].class);
 
         //then
-        assertThat(orderService.getOrders()).hasSize(1);
-assertThat(customerService.getCustomers().get(0).getFirstName()).isEqualTo(customerDtoGiven.getFirstName());
-        assertThat(customerService.getCustomers().get(0).getLastName()).isEqualTo(customerDtoGiven.getLastName());
-        assertThat(customerService.getCustomers().get(0).getEmailAddress()).isEqualTo(customerDtoGiven.getEmailAddress());
-
+        assertThat(customerDtoListReturned).isEmpty();
     }
 
     @Test
-    public void getCustomers_givenAnEmptyDatabase_thenReturnAnEmptyArrayList(){
+    public void getCustomers_givenANonEmptyCustomerDatabase_thenReturnTheListOfCustomers(){
         // given
+        customerController.createCustomer(customerDto()
+                .withFirstName("Jan")
+                .withLastName("Janssens")
+                .withEmailAddress("jansemailaddress@exampleemail.com")
+                .withAddress("jansaddress")
+                .withPhoneNumber("0123456789"));
 
         //when
-        CustomerDto[] customerDtos = new TestRestTemplate()
-                .getForObject(String.format("http://localhost:%s/%s", port, "customers"), CustomerDto[].class);
+        //https://stackoverflow.com/questions/23674046/get-list-of-json-objects-with-spring-resttemplate
+        CustomerDto[] customerDtoListReturned = new TestRestTemplate()
+                .getForObject(String.format("http://localhost:%s/%s", port, "customers")
+                        , CustomerDto[].class);
 
         //then
-        assertThat(customerDtos).isEmpty();
+        assertThat(customerDtoListReturned).hasSize(1);
+        assertThat(customerDtoListReturned[0].getId()).isNotNull();
+        assertThat(customerDtoListReturned[0].getFirstName()).isEqualTo("Jan");
+        assertThat(customerDtoListReturned[0].getLastName()).isEqualTo("Janssens");
+        assertThat(customerDtoListReturned[0].getEmailAddress()).isEqualTo("jansemailaddress@exampleemail.com");
+        assertThat(customerDtoListReturned[0].getAddress()).isEqualTo("jansaddress");
+        assertThat(customerDtoListReturned[0].getPhoneNumber()).isEqualTo("0123456789");
     }
-
-    @Test
-    public void getCustomers_givenADatabaseWithOneCustomer_thenReturnListOfCustomersContainingThatCustomer(){
-        // given
-        CustomerDto customerDtoGiven = createCustomerDto();
-        customerService.createCustomer(customerMapper.toDomain(customerDtoGiven));
-
-        //when
-        CustomerDto[] customerDtos = new TestRestTemplate()
-                .getForObject(String.format("http://localhost:%s/%s", port, "customers"), CustomerDto[].class);
-
-        //then
-        assertThat(customerDtos).hasSize(1);
-        assertThat(customerService.getCustomers().get(0).getFirstName()).isEqualTo(customerDtoGiven.getFirstName());
-        assertThat(customerService.getCustomers().get(0).getLastName()).isEqualTo(customerDtoGiven.getLastName());
-        assertThat(customerService.getCustomers().get(0).getEmailAddress()).isEqualTo(customerDtoGiven.getEmailAddress());
-        assertThat(customerService.getCustomers().get(0).getAddress()).isEqualTo(customerDtoGiven.getAddress());
-        assertThat(customerService.getCustomers().get(0).getPhoneNumber()).isEqualTo(customerDtoGiven.getPhoneNumber());
-
-    }
-
-*/
 }
