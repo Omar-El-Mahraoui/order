@@ -1,4 +1,4 @@
-package com.mygroupid.api.orders;
+package com.mygroupid.domain.orders;
 
 import com.mygroupid.domain.items.Item;
 
