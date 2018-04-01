@@ -5,6 +5,7 @@ import com.mygroupid.domain.items.ItemDatabase;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 
 @Named
 public class ItemService {
@@ -18,5 +19,9 @@ public class ItemService {
 
     public void clearItemDatabase() {
         itemDatabase.clearDatabase();
+    }
+
+    public List<Item> getItems() {
+        return itemDatabase.getItems();
     }
 }
