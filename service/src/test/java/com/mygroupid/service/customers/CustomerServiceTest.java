@@ -2,6 +2,7 @@ package com.mygroupid.service.customers;
 
 import com.mygroupid.domain.customers.Customer;
 import com.mygroupid.domain.customers.CustomerDatabase;
+import com.mygroupid.service.exceptions.UnknownResourceException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,7 @@ import java.util.List;
 import static com.mygroupid.domain.customers.Customer.CustomerBuilder.customer;
 import static java.util.Collections.unmodifiableList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceTest {
@@ -99,6 +101,24 @@ public class CustomerServiceTest {
 
         //then
         assertThat(actualResult).isEqualTo(customer);
+    }
+
+    @Test
+    public void getCustomer_givenACustomerIdThatIsNotPresentInCustomerDatabase_thenThrowException() {
+        // given
+        Customer customer = customer()
+                .withFirstName("Jan")
+                .withLastName("Janssens")
+                .withEmailAddress("jansemailaddress@example.com")
+                .withAddress("jansaddress")
+                .withPhoneNumber("0123456789")
+                .build();
+        Mockito.when(customerDatabase.getCustomer(customer.getId())).thenReturn(customer);
+
+        //then
+        assertThatExceptionOfType(UnknownResourceException.class)
+            .isThrownBy(()->customerService.getCustomer(customer.getId() + "1"))
+            .withMessage("We could not find a Customer for the provided ID");
     }
 
 }
