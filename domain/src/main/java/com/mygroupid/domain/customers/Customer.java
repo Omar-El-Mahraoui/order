@@ -1,6 +1,8 @@
 package com.mygroupid.domain.customers;
 
 import java.util.UUID;
+// copied and adapted code from funiversity example
+
 
 public class Customer {
 
@@ -57,5 +59,9 @@ public class Customer {
 
     public String getId() {
         return id;
+    }
+
+    public static class CustoemrBuilder {
+
     }
 }
