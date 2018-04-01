@@ -1,6 +1,5 @@
 package com.mygroupid.api.customers;
-
-import java.util.UUID;
+// copied and adapted code from funiversity example switchfully
 
 public class CustomerDto {
 
@@ -11,7 +10,15 @@ public class CustomerDto {
     private String address;
     private String phoneNumber;
 
-    public CustomerDto() {
+    private CustomerDto() {
+    }
+
+    public static CustomerDto customerDto() {
+        return new CustomerDto();
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -34,32 +41,34 @@ public class CustomerDto {
         return phoneNumber;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
+    public CustomerDto withId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public CustomerDto withFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public CustomerDto withLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public CustomerDto withEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+        return this;
+    }
+
+    public CustomerDto withAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public CustomerDto withPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
     }
 
 }
