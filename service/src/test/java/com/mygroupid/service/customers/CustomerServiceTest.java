@@ -113,7 +113,6 @@ public class CustomerServiceTest {
                 .withAddress("jansaddress")
                 .withPhoneNumber("0123456789")
                 .build();
-        Mockito.when(customerDatabase.getCustomer(customer.getId())).thenReturn(customer);
 
         //then
         assertThatExceptionOfType(UnknownResourceException.class)

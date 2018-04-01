@@ -1,6 +1,8 @@
 package com.mygroupid.api.customers;
 // copied and adapted code from funiversity example switchfully
 
+import java.util.Objects;
+
 public class CustomerDto {
 
     private String id;
@@ -71,4 +73,34 @@ public class CustomerDto {
         return this;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CustomerDto that = (CustomerDto) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName) &&
+                Objects.equals(emailAddress, that.emailAddress) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(phoneNumber, that.phoneNumber);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, firstName, lastName, emailAddress, address, phoneNumber);
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerDto{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }

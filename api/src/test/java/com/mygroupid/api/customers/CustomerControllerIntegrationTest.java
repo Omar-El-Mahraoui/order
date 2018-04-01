@@ -109,4 +109,25 @@ public class CustomerControllerIntegrationTest {
         assertThat(customerDtoListReturned[0].getAddress()).isEqualTo("jansaddress");
         assertThat(customerDtoListReturned[0].getPhoneNumber()).isEqualTo("0123456789");
     }
+
+    @Test
+    public void getCustomer_givenAnIdThatIsPresentInCustomerDatabase_thenReturnTheCorrespondingCustomerDto(){
+        // given
+        CustomerDto customerDtoGiven = customerDto()
+                .withFirstName("Jan")
+                .withLastName("Janssens")
+                .withEmailAddress("jansemailaddress@exampleemail.com")
+                .withAddress("jansaddress")
+                .withPhoneNumber("0123456789");
+        CustomerDto customerDtoCreated = customerController.createCustomer(customerDtoGiven);
+
+        //when
+        //https://stackoverflow.com/questions/23674046/get-list-of-json-objects-with-spring-resttemplate
+        CustomerDto customerDtoReturned = new TestRestTemplate()
+                .getForObject(String.format("http://localhost:%s/%s/%s", port, "customers", customerDtoCreated.getId())
+                        , CustomerDto.class);
+
+        //then
+        assertThat(customerDtoReturned).isEqualTo(customerDtoCreated);
+    }
 }
