@@ -43,7 +43,7 @@ public class ItemGroup {
         return shippingDate;
     }
 
-    private void setShippingDate(LocalDate shippingDate) {
+    public void setShippingDate(LocalDate shippingDate) {
         this.shippingDate = shippingDate;
     }
 

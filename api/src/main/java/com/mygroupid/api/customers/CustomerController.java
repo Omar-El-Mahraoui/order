@@ -1,6 +1,9 @@
 package com.mygroupid.api.customers;
 
+import com.mygroupid.api.orders.OrderDto;
+import com.mygroupid.api.orders.OrderMapper;
 import com.mygroupid.service.customers.CustomerService;
+import com.mygroupid.service.orders.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +21,10 @@ public class CustomerController {
     private CustomerService customerService;
     @Inject
     private CustomerMapper customerMapper;
+    @Inject
+    private OrderMapper orderMapper;
+    @Inject
+    private OrderService orderService;
 
 
     @PostMapping
@@ -39,6 +46,13 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto getCustomer(@PathVariable("customerId") String customerId) {
         return customerMapper.toDto(customerService.getCustomer(customerId));
+    }
+
+    @PostMapping(path = "/{customerId}/order")
+    @ResponseStatus(HttpStatus.CREATED)
+    public OrderDto createOrder(@PathVariable("customerId") String customerId
+                                , @RequestBody OrderDto orderDto) {
+        return orderMapper.toDto(orderService.createOrder(orderMapper.toDomain(orderDto)));
     }
 
 }
