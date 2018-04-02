@@ -81,7 +81,7 @@ public class Order {
 
         private OrderBuilder() {}
 
-        public OrderBuilder order() { return new OrderBuilder(); }
+        public static OrderBuilder order() { return new OrderBuilder(); }
 
         public Order build() {
             Order order = new Order();

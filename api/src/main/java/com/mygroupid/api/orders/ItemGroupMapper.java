@@ -6,8 +6,13 @@ import com.mygroupid.domain.orders.ItemGroup;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.mygroupid.api.orders.ItemGroupDto.itemGroupDto;
 import static com.mygroupid.domain.orders.ItemGroup.ItemGroupBuilder.itemGroup;
 import static java.lang.String.valueOf;
+import static java.util.stream.Collectors.toList;
 
 @Named
 public class ItemGroupMapper {
@@ -16,11 +21,17 @@ public class ItemGroupMapper {
     private ItemMapper itemMapper;
 
     public ItemGroupDto toDto(ItemGroup itemGroup) {
-        return ItemGroupDto.itemGroupDto()
+        return itemGroupDto()
                 .withId(itemGroup.getId().toString())
                 .withItemDto(itemMapper.toDto(itemGroup.getItem()))
                 .withAmount(valueOf(itemGroup.getAmount()))
                 .withShippingDate(itemGroup.getShippingDate().toString());
+    }
+
+    public List<ItemGroupDto> toDto(List<ItemGroup> itemGroups) {
+        return itemGroups.stream()
+                .map(this::toDto)
+                .collect(toList());
     }
 
     public ItemGroup toDomain(ItemGroupDto itemGroupDto) {
@@ -28,6 +39,12 @@ public class ItemGroupMapper {
                 .withItem(itemMapper.toDomain(itemGroupDto.getItemDto()))
                 .withAmount(Integer.parseInt(itemGroupDto.getAmount()))
                 .build();
+    }
+
+    public List<ItemGroup> toDomain(List<ItemGroupDto> itemGroupDtos) {
+        return itemGroupDtos.stream()
+                .map(this::toDomain)
+                .collect(toList());
     }
 
 }
