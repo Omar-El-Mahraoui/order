@@ -7,6 +7,7 @@ import com.mygroupid.service.exceptions.UnknownResourceException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
+import java.util.UUID;
 
 @Named
 public class CustomerService {

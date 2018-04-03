@@ -26,7 +26,7 @@ public class Order {
         return customer;
     }
 
-    private void setCustomer(Customer customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
@@ -42,7 +42,7 @@ public class Order {
         return price;
     }
 
-    private void setPrice(BigDecimal price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

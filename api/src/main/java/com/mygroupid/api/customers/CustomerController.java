@@ -52,7 +52,8 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public OrderDto createOrder(@PathVariable("customerId") String customerId
                                 , @RequestBody OrderDto orderDto) {
-        return orderMapper.toDto(orderService.createOrder(orderMapper.toDomain(orderDto)));
+        return orderMapper.toDto(orderService.createOrder(orderMapper.toDomain(orderDto)
+                , customerService.getCustomer(customerId)));
     }
 
 }
