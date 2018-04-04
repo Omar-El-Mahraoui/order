@@ -2,13 +2,11 @@ package com.mygroupid.api.orders;
 
 import com.mygroupid.api.customers.CustomerDto;
 
-import java.util.List;
-
 public class OrderDto {
 
     private String id;
     private CustomerDto customer;
-    private List<ItemGroupDto> itemGroups;
+    private ItemGroupDto[] itemGroups;
     private String price;
 
     private OrderDto() {}
@@ -27,7 +25,7 @@ public class OrderDto {
         return this;
     }
 
-    public OrderDto withItemGroupsDto(List<ItemGroupDto> itemGroupsDto) {
+    public OrderDto withItemGroupsDto(ItemGroupDto[] itemGroupsDto) {
         this.itemGroups = itemGroupsDto;
         return this;
     }
@@ -45,7 +43,7 @@ public class OrderDto {
         return customer;
     }
 
-    public List<ItemGroupDto> getItemGroups() {
+    public ItemGroupDto[] getItemGroups() {
         return itemGroups;
     }
 

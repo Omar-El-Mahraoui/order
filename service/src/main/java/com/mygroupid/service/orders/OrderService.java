@@ -1,6 +1,7 @@
 package com.mygroupid.service.orders;
 
 import com.mygroupid.domain.customers.Customer;
+import com.mygroupid.domain.orders.ItemGroup;
 import com.mygroupid.domain.orders.Order;
 import com.mygroupid.domain.orders.OrderDatabase;
 
@@ -9,6 +10,8 @@ import javax.inject.Named;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+
+import static com.mygroupid.domain.orders.Order.OrderBuilder.order;
 
 @Named
 public class OrderService {
@@ -20,8 +23,10 @@ public class OrderService {
         return orderDatabase.getOrders();
     }
 
-    public Order createOrder(Order order, Customer customer) {
+    public Order createOrder(List<ItemGroup> itemGroups, Customer customer) {
+        Order order = order().build();
         order.setCustomer(customer);
+        order.setItemGroups(itemGroups);
         calculateShippingDateForEachItemGroupInOrder(order);
         calculateTotalPrice(order);
         return orderDatabase.createOrder(order);

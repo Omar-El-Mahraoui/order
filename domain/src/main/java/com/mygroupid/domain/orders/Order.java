@@ -34,7 +34,7 @@ public class Order {
         return itemGroups;
     }
 
-    private void setItemGroups(List<ItemGroup> itemGroups) {
+    public void setItemGroups(List<ItemGroup> itemGroups) {
         this.itemGroups = itemGroups;
     }
 

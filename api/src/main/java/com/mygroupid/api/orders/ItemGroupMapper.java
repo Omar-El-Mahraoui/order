@@ -6,6 +6,7 @@ import com.mygroupid.domain.orders.ItemGroup;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,10 +29,11 @@ public class ItemGroupMapper {
                 .withShippingDate(itemGroup.getShippingDate().toString());
     }
 
-    public List<ItemGroupDto> toDto(List<ItemGroup> itemGroups) {
+    public ItemGroupDto[] toDto(List<ItemGroup> itemGroups) {
         return itemGroups.stream()
                 .map(this::toDto)
-                .collect(toList());
+                .collect(toList())
+                .toArray(new ItemGroupDto[0]);
     }
 
     public ItemGroup toDomain(ItemGroupDto itemGroupDto) {
@@ -41,8 +43,8 @@ public class ItemGroupMapper {
                 .build();
     }
 
-    public List<ItemGroup> toDomain(List<ItemGroupDto> itemGroupDtos) {
-        return itemGroupDtos.stream()
+    public List<ItemGroup> toDomain(ItemGroupDto[] itemGroupDtos) {
+        return Arrays.stream(itemGroupDtos)
                 .map(this::toDomain)
                 .collect(toList());
     }

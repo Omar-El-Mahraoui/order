@@ -18,7 +18,6 @@ import java.util.List;
 
 import static com.mygroupid.domain.customers.Customer.CustomerBuilder.customer;
 import static com.mygroupid.domain.items.Item.ItemBuilder.item;
-import static com.mygroupid.domain.orders.Order.OrderBuilder.order;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.SpringApplication.run;
 
@@ -53,13 +52,8 @@ public class OrderServiceIntegrationTest {
         List<ItemGroup> itemGroups = new ArrayList<>();
         itemGroups.add(itemGroup);
 
-        Order orderGiven = order()
-                .withCustomer(customer)
-                .withItemGroups(itemGroups)
-                .build();
-
         //when
-        Order actualResult = orderService.createOrder(orderGiven, customer);
+        Order actualResult = orderService.createOrder(itemGroups, customer);
 
         //then
         assertThat(actualResult.getCustomer()).isEqualTo(customer);
